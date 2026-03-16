@@ -71,7 +71,7 @@ TEMPLATES = [
         },
     },
 ]
-
+STATIC_URL = 'static/'
 ROOT_URLCONF = 'config.urls'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'core.User'

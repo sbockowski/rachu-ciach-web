@@ -32,7 +32,6 @@ class BudgetFactory(factory.django.DjangoModelFactory):
         model = Budget
 
     user = factory.SubFactory(UserFactory)
-    type = factory.Iterator(Budget.Type)
     name = factory.Faker('word')
     date_from = factory.Faker('future_date', end_date="+30d")
     date_to = factory.LazyAttribute(lambda o: o.date_from + timedelta(days=30))

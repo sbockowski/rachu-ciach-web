@@ -15,12 +15,12 @@ def test_category_created():
 def test_system_categories():
     category = CategoryFactory(is_system=True, user = UserFactory())
     with pytest.raises(ValidationError):
-        category.clean()
+        category.full_clean()
 
 def test_user_categories():
     category = CategoryFactory(is_system=False, user = None)
     with pytest.raises(ValidationError):
-        category.clean()
+        category.full_clean()
 
 def test_category_is_unique():
     test_user = UserFactory()

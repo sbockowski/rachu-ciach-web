@@ -2,7 +2,7 @@ import factory
 from django.contrib.auth.hashers import make_password
 from datetime import timedelta
 from apps.core.models import User
-from apps.budgets.models import Category, Budget
+from apps.budgets.models import Category, Budget, BudgetPlan
 from apps.transactions.models import Transaction
 from apps.savings.models import SavingsSnapshot
 from faker import Faker
@@ -35,6 +35,15 @@ class BudgetFactory(factory.django.DjangoModelFactory):
     name = factory.Faker('word')
     date_from = factory.Faker('future_date', end_date="+30d")
     date_to = factory.LazyAttribute(lambda o: o.date_from + timedelta(days=30))
+
+
+class BudgetPlanFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = BudgetPlan
+
+    budget = factory.SubFactory(BudgetFactory)
+    category = factory.SubFactory(CategoryFactory)
+    planned_amount = factory.Faker('pydecimal', left_digits=5, right_digits=2, positive=True)
 
 
 class TransactionFactory(factory.django.DjangoModelFactory):

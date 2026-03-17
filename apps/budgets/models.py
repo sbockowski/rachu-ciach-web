@@ -1,6 +1,9 @@
 import uuid
+from decimal import Decimal
+
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator
 from django.db import models
 
 
@@ -48,7 +51,7 @@ class Budget(models.Model):
 class BudgetPlan(models.Model):
     budget = models.ForeignKey(Budget, on_delete=models.CASCADE, related_name='plans')
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    planned_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    planned_amount = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(Decimal('0.01'))])
 
     class Meta:
         unique_together = ['budget', 'category']

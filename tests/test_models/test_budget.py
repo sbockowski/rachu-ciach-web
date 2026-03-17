@@ -20,9 +20,9 @@ def test_budget_date():
 def test_budget_incorrect_dates():
     budget = BudgetFactory(date_from=date(2025, 3, 15), date_to=date(2025, 3, 1))
     with pytest.raises(ValidationError):
-        budget.clean()
+        budget.full_clean()
 
 def test_budget_equal_dates():
     budget = BudgetFactory(date_from=date(2025, 3, 1), date_to=date(2025, 3, 1))
     with pytest.raises(ValidationError):
-        budget.clean()
+        budget.full_clean()

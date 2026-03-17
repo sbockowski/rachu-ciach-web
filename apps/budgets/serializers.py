@@ -15,6 +15,10 @@ class BudgetSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'name', 'date_from', 'date_to', 'created_at']
         read_only_fields = ['id', 'user', 'created_at']
 
+    def validate(self, data):
+        if data['date_to'] <= data['date_from']:
+            raise serializers.ValidationError("Field 'date_to' cannot contain date before or equal to field 'date_from'")
+        return data
 
 class BudgetPlanSerializer(serializers.ModelSerializer):
     class Meta:

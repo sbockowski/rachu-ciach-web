@@ -31,8 +31,8 @@ class Budget(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def clean(self):
-        if self.date_to < self.date_from:
-            raise ValidationError("Field 'date_to' cannot contain date before field 'date_from'")
+        if self.date_to <= self.date_from:
+            raise ValidationError("Field 'date_to' cannot contain date before or equal to field 'date_from'")
 
     def __str__(self):
         return f'{self.name} ({self.date_from} - {self.date_to})'

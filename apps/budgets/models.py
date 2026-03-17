@@ -18,6 +18,14 @@ class Category(models.Model):
 
     class Meta:
         verbose_name_plural = 'categories'
+        unique_together = ['user', 'type', 'name']
+
+    def clean(self):
+        if self.is_system and self.user is not None:
+            raise ValidationError("System's categories cannot have user assigned.")
+        if not self.is_system and self.user is None:
+            raise ValidationError("User's categories need user assigned.")
+
 
     def __str__(self):
         return f'{self.name} ({self.type})'

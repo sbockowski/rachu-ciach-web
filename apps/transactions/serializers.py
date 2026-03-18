@@ -1,9 +1,6 @@
-from unicodedata import category
-
 from rest_framework import serializers
 
 from apps.budgets.models import Category
-from apps.savings.models import SavingsSnapshot
 from apps.transactions.models import Transaction
 
 

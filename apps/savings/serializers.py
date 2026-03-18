@@ -9,16 +9,12 @@ from apps.savings.models import SavingsSnapshot
 class SavingSnapshotSerializer(serializers.ModelSerializer):
     class Meta:
         model = SavingsSnapshot
-        fields = ['id', 'user', 'budget', 'category', 'balance', 'note', 'snapshot_date']
+        fields = ['id', 'user', 'category', 'balance', 'note', 'snapshot_date']
         read_only_fields = ['id', 'user']
 
     def validate(self, data):
-        budget = data.get('budget') or self.instance.budget
         category = data.get('category') or self.instance.category
         snapshot_date = data.get('snapshot_date') or self.instance.snapshot_date
-
-        if budget and budget.user != self.context['request'].user:
-            raise serializers.ValidationError("You can't assign a budget that isn't yours.")
 
         if category and category.user != self.context['request'].user:
             raise serializers.ValidationError("You can't assign a category that isn't yours.")

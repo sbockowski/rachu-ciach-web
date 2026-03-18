@@ -2,8 +2,8 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import permissions, status
-from .models import Budget
-from .serializers import BudgetSerializer
+from .models import Budget, Category
+from .serializers import BudgetSerializer, CategorySerializer
 
 
 class BudgetListView(APIView):
@@ -18,10 +18,11 @@ class BudgetListView(APIView):
     def post(self, request):
         serializer = BudgetSerializer(data=request.data)
         if serializer.is_valid():
-            budget = serializer.save(user=request.user)
+            serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class BudgetDetailView(APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -39,7 +40,7 @@ class BudgetDetailView(APIView):
 
     def put(self, request, pk, format=None):
         budget = self.get_object(request, pk)
-        serializer = BudgetSerializer(budget, data=request.data)
+        serializer = BudgetSerializer(budget, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -50,3 +51,43 @@ class BudgetDetailView(APIView):
         budget.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
+class CategoryListView(APIView):
+
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        categories = Category.objects.filter(user=request.user)
+        serializer = CategorySerializer(categories, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = CategorySerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CategoryDetailView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self, request, pk):
+        try:
+            return Category.objects.get(id=pk, user=request.user)
+        except Category.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk):
+        category = self.get_object(request, pk)
+        serializer = CategorySerializer(category)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        category = self.get_object(request, pk)
+        serializer = CategorySerializer(category, data=request.data, context={'request': request}, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

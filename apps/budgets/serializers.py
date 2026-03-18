@@ -8,6 +8,13 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'name', 'type', 'is_system']
         read_only_fields = ['id', 'user', 'is_system']
 
+    def validate(self, data):
+        user = self.context['request'].user
+        name = data.get('name')
+        type_ = data.get('type') or self.instance.type
+        if name and type_ and Category.objects.filter(user=user, name=name, type=type_).exists():
+            raise serializers.ValidationError("Category with this name and type already exists.")
+        return data
 
 class BudgetSerializer(serializers.ModelSerializer):
     class Meta:

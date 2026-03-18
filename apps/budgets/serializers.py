@@ -10,7 +10,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         user = self.context['request'].user
-        name = data.get('name')
+        name = data.get('name') or self.instance.name
         type_ = data.get('type') or self.instance.type
         if name and type_ and Category.objects.filter(user=user, name=name, type=type_).exists():
             raise serializers.ValidationError("Category with this name and type already exists.")
@@ -31,4 +31,19 @@ class BudgetPlanSerializer(serializers.ModelSerializer):
     class Meta:
         model = BudgetPlan
         fields = ['id', 'budget', 'category', 'planned_amount']
-        read_only_fields = ['id', 'budget', 'category', 'planned_amount']
+        read_only_fields = ['id']
+
+    def validate(self, data):
+        budget = data.get('budget') or self.instance.budget
+        category = data.get('category') or self.instance.category
+
+        if budget and budget.user != self.context['request'].user:
+            raise serializers.ValidationError("You can't assign a budget that isn't yours.")
+
+        if category and category.user != self.context['request'].user:
+            raise serializers.ValidationError("You can't assign a category that isn't yours.")
+
+        if budget and category and BudgetPlan.objects.filter(budget=budget, category=category).exists():
+            raise serializers.ValidationError("BudgetPlan in this budget and with this category already exists.")
+
+        return data

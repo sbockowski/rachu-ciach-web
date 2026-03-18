@@ -63,7 +63,6 @@ class SavingsSnapshotFactory(factory.django.DjangoModelFactory):
         model = SavingsSnapshot
 
     user = factory.SubFactory(UserFactory)
-    budget = factory.LazyAttribute(lambda o: BudgetFactory(user=o.user))
     category = factory.LazyAttribute(lambda o: CategoryFactory(user=o.user))
     balance = factory.Faker('pydecimal', left_digits=5, right_digits=2, positive=True)
     snapshot_date = factory.LazyAttribute(lambda o: fake.date_between(start_date=o.budget.date_from, end_date=o.budget.date_to))

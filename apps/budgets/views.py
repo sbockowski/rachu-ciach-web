@@ -99,8 +99,6 @@ class BudgetPlanListView(APIView):
 
     def get(self, request):
         budget_plans = BudgetPlan.objects.filter(budget__user=request.user)
-        print(budget_plans)
-        print(request.user)
         serializer = BudgetPlanSerializer(budget_plans, many=True)
         return Response(serializer.data)
 
@@ -119,7 +117,7 @@ class BudgetPlanDetailView(APIView):
     def get_object(self, request, pk):
         try:
             return BudgetPlan.objects.get(id=pk, budget__user=request.user)
-        except Budget.DoesNotExist:
+        except BudgetPlan.DoesNotExist:
             raise Http404
 
     def get(self, request, pk):

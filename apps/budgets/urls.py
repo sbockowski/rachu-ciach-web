@@ -1,8 +1,10 @@
-from django.contrib import admin
 from django.urls import path
 
-from apps.budgets.views import BudgetListView, BudgetDetailView, CategoryListView, CategoryDetailView, \
+from apps.budgets.views import (
+    BudgetListView, BudgetDetailView,
+    CategoryListView, CategoryDetailView, \
     BudgetPlanDetailView, BudgetPlanListView
+)
 
 urlpatterns = [
     path('api/budgets/', BudgetListView.as_view(), name='budget_list'),

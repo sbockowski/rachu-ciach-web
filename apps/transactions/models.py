@@ -12,13 +12,15 @@ class Transaction(models.Model):
     class Type(models.TextChoices):
         EXPENSE = 'expense'
         INCOME = 'income'
+        SAVING_DEPOSIT = 'saving_deposit'
+        SAVING_WITHDRAWAL = 'saving_withdrawal'
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     budget = models.ForeignKey(Budget, on_delete=models.CASCADE, related_name='transactions')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(Decimal('0.01'))])
-    type = models.CharField(max_length=10, choices=Type.choices)
+    type = models.CharField(max_length=20, choices=Type.choices)
     date = models.DateField()
     description = models.CharField(max_length=255, blank=True)
     source = models.CharField(max_length=20, default='web')

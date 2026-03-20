@@ -4,5 +4,5 @@ from apps.savings.views import SavingsSnapshotListView, SavingsSnapshotDetailVie
 
 urlpatterns = [
     path('api/savings/', SavingsSnapshotListView.as_view(), name='savings_list'),
-    path('api/savings/<pk>', SavingsSnapshotDetailView.as_view(), name='savings_detail'),
+    path('api/savings/<pk>/', SavingsSnapshotDetailView.as_view(), name='savings_detail'),
 ]

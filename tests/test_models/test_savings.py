@@ -26,5 +26,4 @@ def test_incorrect_snapshot_date(test_date):
 
 def test_savings_snapshot_user():
     saving = SavingsSnapshotFactory()
-    assert saving.budget.user == saving.user
     assert saving.category.user == saving.user

@@ -1,6 +1,6 @@
 import factory
 from django.contrib.auth.hashers import make_password
-from datetime import timedelta
+from datetime import timedelta, date
 from apps.core.models import User
 from apps.budgets.models import Category, Budget, BudgetPlan
 from apps.transactions.models import Transaction
@@ -65,4 +65,4 @@ class SavingsSnapshotFactory(factory.django.DjangoModelFactory):
     user = factory.SubFactory(UserFactory)
     category = factory.LazyAttribute(lambda o: CategoryFactory(user=o.user))
     balance = factory.Faker('pydecimal', left_digits=5, right_digits=2, positive=True)
-    snapshot_date = factory.LazyAttribute(lambda o: fake.date_between(start_date=o.budget.date_from, end_date=o.budget.date_to))
+    snapshot_date = factory.LazyFunction(lambda: date.today())

@@ -45,7 +45,7 @@ class BudgetPlanSerializer(serializers.ModelSerializer):
         if category and category.user != self.context['request'].user:
             raise serializers.ValidationError("You can't assign a category that isn't yours.")
 
-        if budget and category and BudgetPlan.objects.filter(budget=budget, category=category).exists():
+        if budget and category and BudgetPlan.objects.filter(budget=budget, category=category).exclude(pk=self.instance.pk if self.instance else None).exists():
             raise serializers.ValidationError("BudgetPlan in this budget and with this category already exists.")
 
         return data

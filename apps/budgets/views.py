@@ -117,7 +117,7 @@ class BudgetPlanListView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = BudgetPlanSerializer(data=request.data)
+        serializer = BudgetPlanSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -141,7 +141,7 @@ class BudgetPlanDetailView(APIView):
 
     def put(self, request, pk):
         budget_plan = self.get_object(request, pk)
-        serializer = BudgetPlanSerializer(budget_plan, data=request.data, partial=True)
+        serializer = BudgetPlanSerializer(budget_plan, data=request.data, context={'request': request}, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

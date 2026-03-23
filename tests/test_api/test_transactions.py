@@ -31,6 +31,7 @@ def test_create_transaction(api_client, user):
 
     assert response.status_code == 201
     assert response.data['budget'] == budget.id
+    assert response.data['source'] == 'api'
 
 def test_create_transaction_with_other_users_budget(api_client, user, other_user):
     budget = BudgetFactory(user=other_user)

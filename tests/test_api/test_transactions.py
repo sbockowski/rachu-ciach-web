@@ -59,7 +59,7 @@ def test_create_transaction_with_negative_amount(api_client, user, amount):
 
     assert response.status_code == 400
 
-def test_create_transaction_with_incorrect_dates(api_client, user):
+def test_create_transaction_with_incorrect_date(api_client, user):
     budget = BudgetFactory(user=user)
     category = CategoryFactory(user=user)
     response = api_client.post('/api/transactions/', {'budget': str(budget.id), 'category': category.id, 'amount': 1000.00, 'type': 'income', 'date': budget.date_to + timedelta(days=30)}, format='json')

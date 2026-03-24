@@ -1,6 +1,6 @@
 from django.urls import path
 
-from apps.savings.views import SavingsSnapshotListView, SavingsSnapshotDetailView
+from apps.savings.views.api import SavingsSnapshotListView, SavingsSnapshotDetailView
 
 urlpatterns = [
     path('api/savings/', SavingsSnapshotListView.as_view(), name='savings_list'),

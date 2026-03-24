@@ -1,6 +1,6 @@
 from django.urls import path
 
-from apps.transactions.views import TransactionListView, TransactionDetailView
+from apps.transactions.views.api import TransactionListView, TransactionDetailView
 
 urlpatterns = [
     path('api/transactions/', TransactionListView.as_view(), name='transactions_list'),

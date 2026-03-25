@@ -1,6 +1,9 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
+from django.views.generic import ListView
 from django.contrib import messages
 from .forms import UserRegisterForm
+from apps.budgets.models import Budget
 
 
 def register(request):
@@ -16,3 +19,10 @@ def register(request):
     else:
         form = UserRegisterForm()
     return render(request, "register.html", {"form": form})
+
+class BudgetsListView(LoginRequiredMixin, ListView):
+    template_name = 'dashboard.html'
+    context_object_name = 'budgets'
+
+    def get_queryset(self):
+        return Budget.objects.filter(user=self.request.user)

@@ -7,6 +7,9 @@ from apps.budgets.models import Budget
 
 
 def register(request):
+    if request.user.is_authenticated:
+        return redirect("dashboard")
+
     if request.method == "POST":
         form = UserRegisterForm(request.POST)
         if form.is_valid():

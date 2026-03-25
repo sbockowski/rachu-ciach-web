@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="md:col-span-2 max-w-2xl mx-auto mt-10"">
+    <div class="card bg-base-200 shadow">
+        <div class="card-body">
+
+            {% if budget %}
+            <div class="space-y-2">
+                <div class="flex justify-between items-center p-3 bg-base-100 rounded-lg shadow-sm">
+                    <table class="table table-zebra">
+                        <tbody>
+                            <tr>
+                                <th>Name</th>
+                                <td>{{ budget.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Date from</th>
+                                <td>{{ budget.date_from }}</td>
+                            </tr>
+                            <tr>
+                                <th>Date to</th>
+                                <td>{{ budget.date_to }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <a href="/dashboard" class="btn btn-success w-full mt-4">Return</a>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

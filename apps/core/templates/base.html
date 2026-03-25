@@ -13,15 +13,20 @@
     {% endif %}
 </head>
 <body class="bg-zinc-100 min-h-screen">
-    <main role="main" class="min-h-screen flex items-center justify-center">
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="alert alert-{{ message.tags }}">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                {% endif %}
-                {% block content %}{% endblock %}
-    </main>
+<!-- 🔔 Messages (top center, fixed) -->
+<div class="fixed top-12 left-1/2 -translate-x-1/2 z-50 w-full max-w-md">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert shadow-lg mb-2 alert-{{ message.tags }}">
+                <span>{{ message }}</span>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<!-- 📦 Main content (form stays centered) -->
+<main class="min-h-screen flex items-center justify-center">
+    {% block content %}{% endblock %}
+</main>
 </body>
 </html>

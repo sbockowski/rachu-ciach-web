@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 User = get_user_model()
 
@@ -42,3 +42,18 @@ class UserRegisterForm(UserCreationForm):
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError("Passwords do not match")
         return cleaned_data
+
+class CustomLoginForm(AuthenticationForm):
+    username = forms.EmailField(
+        widget=forms.EmailInput(attrs={
+            "class": "input input-bordered w-full",
+            "placeholder": "Enter your email"
+        })
+    )
+
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            "class": "input input-bordered w-full",
+            "placeholder": "Enter your password"
+        })
+    )

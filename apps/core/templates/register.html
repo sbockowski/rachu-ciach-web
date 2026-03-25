@@ -2,16 +2,29 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-<form method="post" class="card rounded-box bg-base-200 shadow-2xl p-8 md:p-10 w-full max-w-lg mx-auto space-y-6">
+<form method="POST" class="card rounded-box bg-base-200 shadow-2xl p-8 md:p-10 w-full max-w-lg mx-auto space-y-6">
   {% csrf_token %}
 
   <!-- Title -->
-  <h2 class="text-2xl font-bold text-center">Create account</h2>
+  <h2 class="text-3xl font-bold text-center">Create account</h2>
+
+    <!-- Username -->
+  <div class="form-control">
+    <label class="label">
+      <span class="label-text text-base font-bold">Username</span>
+    </label>
+    {{ form.username }}
+    {% if form.username.errors %}
+      <span class="text-error text-sm mt-1">
+        {{ form.username.errors.0 }}
+      </span>
+    {% endif %}
+  </div>
 
   <!-- Email -->
   <div class="form-control">
     <label class="label">
-      <span class="label-text text-base">Email</span>
+      <span class="label-text text-base font-bold">Email</span>
     </label>
     {{ form.email }}
     {% if form.email.errors %}
@@ -24,7 +37,7 @@
   <!-- Password -->
   <div class="form-control">
     <label class="label">
-      <span class="label-text text-base">Password</span>
+      <span class="label-text text-base font-bold">Password</span>
     </label>
     {{ form.password1 }}
     {% if form.password1.errors %}
@@ -37,7 +50,7 @@
   <!-- Repeat Password -->
   <div class="form-control">
     <label class="label">
-      <span class="label-text text-base">Repeat Password</span>
+      <span class="label-text text-base font-bold">Repeat Password</span>
     </label>
     {{ form.password2 }}
     {% if form.password2.errors %}
@@ -55,7 +68,7 @@
   {% endif %}
 
   <!-- Submit -->
-  <button type="submit" class="btn btn-neutral w-full mt-4 text-base">
+  <button type="submit" class="btn btn-success w-full mt-4 text-base">
     Sign up
   </button>
 

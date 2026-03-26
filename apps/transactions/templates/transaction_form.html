@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="max-w-2xl mx-auto mt-10">
+  <div class="card bg-base-200 shadow-xl">
+    <div class="card-body">
+      
+      <h2 class="card-title text-2xl font-bold mb-4">
+        {% if object %}
+        Update Transaction
+        {% else %}
+        Create New Transaction
+        {% endif %}
+      </h2>
+
+      <form method="post" class="space-y-4">
+        {% csrf_token %}
+
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Budget</span>
+          </label>
+          {{ form.budget }}
+          {% if form.name.errors %}
+            <span class="text-error text-sm">{{ form.name.errors.0 }}</span>
+          {% endif %}
+        </div>
+
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text">Category</span>
+        </label>
+        {{ form.category }}
+      </div>
+
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text">Amount</span>
+        </label>
+        {{ form.amount }} PLN
+      </div>
+
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text">Type</span>
+        </label>
+        {{ form.type }}
+      </div>
+
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text">Date</span>
+        </label>
+        {{ form.date }}
+      </div>
+
+     <div class="form-control">
+        <label class="label">
+          <span class="label-text">Description</span>
+        </label>
+        {{ form.description }}
+      </div>
+        <!-- Errors -->
+        {% if form.non_field_errors %}
+          <div class="text-error text-sm">
+            {{ form.non_field_errors.0 }}
+          </div>
+        {% endif %}
+
+        <!-- Buttons -->
+        <div class="flex justify-end gap-2 mt-4">
+          <a href="{% url 'dashboard' %}" class="btn btn-ghost">
+            Cancel
+          </a>
+          <button type="submit" class="btn btn-primary">
+            {% if object %}
+            Update
+            {% else %}
+            Create
+            {% endif %}
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

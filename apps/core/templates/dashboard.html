@@ -102,12 +102,13 @@
                         <td>{{ transaction.date }}</td>
                         <td>{{ transaction.budget }}</td>
                         <td>{{ transaction.category }}</td>
+                        <td>{{ transaction.type }}</td>
                         <td>{{ transaction.amount }} PLN</td>
                         <td>{{ transaction.description }}</td>
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="5" class="text-center opacity-70">
+                        <td colspan="6" class="text-center opacity-70">
                             No transactions yet
                         </td>
                     </tr>

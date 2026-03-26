@@ -6,7 +6,11 @@
     <div class="card-body">
       
       <h2 class="card-title text-2xl font-bold mb-4">
+        {% if object %}
+        Update Budget
+        {% else %}
         Create New Budget
+        {% endif %}
       </h2>
 
       <form method="post" class="space-y-4">
@@ -53,7 +57,11 @@
             Cancel
           </a>
           <button type="submit" class="btn btn-primary">
+            {% if object %}
+            Update Budget
+            {% else %}
             Create Budget
+            {% endif %}
           </button>
         </div>
 

@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.template.context_processors import request
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView, DetailView, UpdateView
 from django.urls import reverse_lazy
 
 from apps.budgets.forms import BudgetForm
@@ -10,8 +10,21 @@ from apps.budgets.models import Budget
 class BudgetCreateView(LoginRequiredMixin, CreateView):
     model = Budget
     form_class = BudgetForm
-    template_name = 'budget_create.html'
+    template_name = 'budget_form.html'
     success_url = reverse_lazy('dashboard')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+class BudgetUpdateView(LoginRequiredMixin, UpdateView):
+    model = Budget
+    form_class = BudgetForm
+    template_name = 'budget_form.html'
+    success_url = reverse_lazy('dashboard')
+
+    def get_queryset(self):
+        return Budget.objects.filter(user=self.request.user)
 
     def form_valid(self, form):
         form.instance.user = self.request.user

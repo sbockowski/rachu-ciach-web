@@ -21,7 +21,9 @@ class BudgetUpdateView(LoginRequiredMixin, UpdateView):
     model = Budget
     form_class = BudgetForm
     template_name = 'budget_form.html'
-    success_url = reverse_lazy('dashboard')
+
+    def get_success_url(self):
+        return reverse_lazy('budget_detail', kwargs={'pk': self.object.pk})
 
     def get_queryset(self):
         return Budget.objects.filter(user=self.request.user)

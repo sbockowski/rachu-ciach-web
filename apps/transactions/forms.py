@@ -17,9 +17,12 @@ class TransactionForm(forms.ModelForm):
         fields = ['budget', 'category', 'amount', 'type', 'date', 'description']
         widgets = {
             'budget': forms.Select(attrs={'class': 'select select-bordered w-full'}),
-            'category': forms.Select(attrs={'class': 'select select-bordered w-full'}),
-            'amount': forms.NumberInput(attrs={'class': 'input input-bordered w-full'}),
-            'type': forms.Select(attrs={'class': 'select select-bordered w-full'}),
+            'category': forms.Select(attrs={'class': 'select select-bordered w-full',
+                                            'hx-get': '/transactions/category-type/',
+                                            'hx-target': '#transaction-type-container',
+                                            'hx-trigger': 'change'
+        }),
+            'amount': forms.NumberInput(attrs={'class': 'grow', 'placeholder': '0.00 PLN'}),
             'date': forms.DateInput(attrs={'class': 'input input-bordered w-full', 'type': 'date'}),
             'description': forms.TextInput(attrs={'class': 'input input-bordered w-full',}),
         }

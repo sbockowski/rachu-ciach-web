@@ -1,7 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
+from apps.budgets.models import Category
 from apps.transactions.forms import TransactionForm
 from apps.transactions.models import Transaction
 
@@ -27,3 +29,13 @@ class TransactionCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+def get_transaction_type(request):
+    category_pk = request.GET.get('category')
+    category = Category.objects.get(pk=category_pk)
+
+    context = {
+        'is_saving': category.type == 'saving',
+        'category_type': category.type
+    }
+    return render(request, "transaction_type_field.html", context=context)

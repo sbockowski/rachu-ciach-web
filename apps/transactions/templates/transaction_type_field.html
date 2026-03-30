@@ -1,0 +1,14 @@
+<div class="form-control">
+<label class="label">
+  <span class="label-text">Type</span>
+</label>
+    {% if is_saving %}
+        <select class="select select-bordered w-full" name="type" id="id_type">
+          <option value="">---------</option>
+          <option value="saving_deposit">Saving Deposit</option>
+          <option value="saving_withdrawal">Saving Withdrawal</option>
+        </select>
+    {% else %}
+        <input class="select select-bordered w-full" type="hidden" name="type" value="{{ category_type }}">{{ category_type | title }}
+    {% endif %}
+</div>

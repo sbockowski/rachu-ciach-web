@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="md:col-span-2 max-w-2xl mx-auto mt-10">
+    <div class="card bg-base-200 shadow">
+        <div class="card-body">
+            <div class="flex justify-between">
+                <h2 class="card-title mb-4">Budget Detail</h2>
+                <div>
+                    <a href="update" class="btn btn-warning btn-md mb-4">
+                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                             xmlns="http://www.w3.org/2000/svg" width="24"
+                             height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                  stroke-width="2"
+                                  d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
+                        </svg>
+                    </a>
+                    <button class="btn btn-error btn-md mb-4" onclick="delete_modal.showModal()">Delete</button>
+                </div>
+            </div>
+            {% if budget %}
+            <div class="space-y-2">
+                <div class="flex justify-between items-center p-3 bg-base-100 rounded-lg shadow-sm">
+                    <table class="table table-zebra">
+                        <tbody>
+                        <tr>
+                            <th>Name</th>
+                            <td>{{ budget.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Date from</th>
+                            <td>{{ budget.date_from }}</td>
+                        </tr>
+                        <tr>
+                            <th>Date to</th>
+                            <td>{{ budget.date_to }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="flex justify-between">
+                    <h2 class="card-title mb-4">Categories</h2>
+                    <button class="btn btn-success btn-md mb-4">+</button>
+                </div>
+                {% if budget_plans %}
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center p-3 bg-base-100 rounded-lg shadow-sm">
+                        <table class="table table-zebra">
+                            <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Planned Amount</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for budget_plan in budget_plans %}
+                            <tr>
+                                <td>{{ budget_plan.category }}</td>
+                                <td>{{ budget_plan.planned_amount }} PLN</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center opacity-70">
+                                    No budget_plans yet
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% include "transaction_list.html" %}
+        <a href="/dashboard" class="btn btn-primary w-full mt-4">Return</a>
+    </div>
+</div>
+
+<dialog id="delete_modal" class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg">Delete budget</h3>
+    <p class="py-4">Are sure that you want to delete budget <strong>{{ budget.name }}</strong>?</p>
+    <div class="modal-action">
+      <form method="dialog">
+        <button class="btn">Cancel</button>
+      </form>
+      <form method="post" action="{% url 'budget_delete' budget.pk %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-error">Delete</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+{% endblock %}

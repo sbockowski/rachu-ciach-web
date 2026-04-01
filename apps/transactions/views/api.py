@@ -2,8 +2,8 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import permissions, status
-from .models import Transaction
-from .serializers import TransactionSerializer
+from apps.transactions.models import Transaction
+from apps.transactions.serializers import TransactionSerializer
 
 
 class TransactionListView(APIView):

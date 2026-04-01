@@ -1,6 +1,6 @@
 from django.urls import path
 
-from apps.budgets.views import (
+from apps.budgets.views.api import (
     BudgetListView, BudgetDetailView,
     CategoryListView, CategoryDetailView, \
     BudgetPlanDetailView, BudgetPlanListView

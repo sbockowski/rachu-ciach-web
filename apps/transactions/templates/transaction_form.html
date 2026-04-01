@@ -30,7 +30,18 @@
                     <label class="label">
                         <span class="label-text">Category</span>
                     </label>
-                    {{ form.category }}
+                    <select class="select select-bordered w-full"
+                            name="category"
+                            hx-get="/transactions/category-type/"
+                            hx-target="#transaction-type-container"
+                            hx-trigger="load, change"
+                            hx-vals='{"current_type": "{{ form.instance.type }}"}'>
+                        {% for choice in form.category.field.choices %}
+                            <option value="{{ choice.0 }}" {% if choice.0 == form.category.value %}selected{% endif %}>
+                                {{ choice.1 }}
+                            </option>
+                        {% endfor %}
+                    </select>
                 </div>
 
                 <div class="form-control">

@@ -96,6 +96,7 @@
                         <th>Type</th>
                         <th>Amount</th>
                         <th>Description</th>
+                        <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -107,6 +108,7 @@
                         <td>{{ transaction.type }}</td>
                         <td>{{ transaction.amount }} PLN</td>
                         <td>{{ transaction.description }}</td>
+                        <td><a href="/transactions/{{ transaction.id }}/update/" class="btn btn-warning btn-md mb-4">Update</a></td>
                     </tr>
                     {% empty %}
                     <tr>

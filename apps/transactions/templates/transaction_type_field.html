@@ -4,9 +4,9 @@
 </label>
     {% if is_saving %}
         <select class="select select-bordered w-full" name="type" id="id_type">
-          <option value="">---------</option>
-          <option value="saving_deposit">Saving Deposit</option>
-          <option value="saving_withdrawal">Saving Withdrawal</option>
+            <option value="">---------</option>
+            <option value="saving_deposit" {% if current_type == 'saving_deposit' %}selected{% endif %}>Saving Deposit</option>
+            <option value="saving_withdrawal" {% if current_type == 'saving_withdrawal' %}selected{% endif %}>Saving Withdrawal</option>
         </select>
     {% else %}
         <input class="select select-bordered w-full" type="hidden" name="type" value="{{ category_type }}">{{ category_type | title }}

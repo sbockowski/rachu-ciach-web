@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, DeleteView
 
 from apps.budgets.models import Category
 from apps.transactions.forms import TransactionForm
@@ -47,6 +47,13 @@ class TransactionUpdateView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+class TransactionDeleteView(LoginRequiredMixin, DeleteView):
+    model = Transaction
+    success_url = reverse_lazy('dashboard')
+
+    def get_queryset(self):
+        return Transaction.objects.filter(user=self.request.user)
 
 def get_transaction_type(request):
     category_pk = request.GET.get('category')

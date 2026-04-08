@@ -2,8 +2,8 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import permissions, status
-from .models import SavingsSnapshot
-from .serializers import SavingSnapshotSerializer
+from apps.savings.models import SavingsSnapshot
+from apps.savings.serializers import SavingSnapshotSerializer
 
 
 class SavingsSnapshotListView(APIView):

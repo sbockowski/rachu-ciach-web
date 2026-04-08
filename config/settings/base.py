@@ -45,7 +45,9 @@ INSTALLED_APPS = [
     'apps.core',
     'apps.budgets',
     'apps.transactions',
-    'apps.savings'
+    'apps.savings',
+    'crispy_daisyui',
+    'crispy_forms'
 ]
 
 MIDDLEWARE = [
@@ -83,3 +85,7 @@ STATIC_URL = 'static/'
 ROOT_URLCONF = 'config.urls'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'core.User'
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'daisyui'
+CRISPY_TEMPLATE_PACK = 'daisyui'
+LOGIN_REDIRECT_URL = 'dashboard'
+LOGIN_URL = 'login'

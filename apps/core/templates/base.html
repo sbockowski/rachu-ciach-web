@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    {% if title %}
+        <title>Django Blog - {{ title }}</title>
+    {% else %}
+        <title>Django Blog</title>
+    {% endif %}
+</head>
+<body class="bg-zinc-100 min-h-screen">
+<!-- 🔔 Messages (top center, fixed) -->
+<div class="fixed top-12 left-1/2 -translate-x-1/2 z-50 w-full max-w-md">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert shadow-lg mb-2 alert-{{ message.tags }}">
+                <span>{{ message }}</span>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<!-- 📦 Main content (form stays centered) -->
+<main class="min-h-screen p-6">
+    {% block content %}{% endblock %}
+</main>
+</body>
+</html>

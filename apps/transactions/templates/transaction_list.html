@@ -1,0 +1,74 @@
+
+<!-- 📋 Last transactions -->
+<div class="card">
+    <div class="card-body">
+        <div class="flex justify-between">
+            <h2 class="card-title mb-4">Last Transactions</h2>
+            <button class="btn btn-success btn-md mb-4">+</button>
+        </div>
+        <div class="flex justify-between items-center p-3 bg-base-100 rounded-lg shadow-sm">
+            <table class="table table-zebra">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Category</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for transaction in transactions %}
+                <tr>
+                    <td>{{ transaction.date }}</td>
+                    <td>{{ transaction.category }}</td>
+                    <td>{{ transaction.type }}</td>
+                    <td>{{ transaction.amount }} PLN</td>
+                    <td>{{ transaction.description }}</td>
+                    <td>
+                        <a href="/transactions/{{ transaction.id }}/update/" class="btn btn-warning">
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                 xmlns="http://www.w3.org/2000/svg" width="24"
+                                 height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                      stroke-width="2"
+                                      d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
+                            </svg>
+                        </a>
+                        <button class="btn btn-error btn-md" onclick="delete_modal_{{ transaction.id|cut:"-" }}.showModal()">
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+                            </svg>
+                        </button>
+                    </td>
+                </tr>
+                <dialog id="delete_modal_{{ transaction.id|cut:"-" }}" class="modal">
+                    <div class="modal-box">
+                        <h3 class="font-bold text-lg">Delete transaction</h3>
+                        <p class="py-4">Are sure that you want to delete transaction <strong>{{ transaction.category }} {{ transaction.amount }}</strong>?</p>
+                        <div class="modal-action">
+                            <form method="dialog">
+                                <button class="btn">Cancel</button>
+                            </form>
+                            <form method="post" action="{% url 'transaction_delete' transaction.pk %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-error">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </dialog>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center opacity-70">
+                        No transactions yet
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
